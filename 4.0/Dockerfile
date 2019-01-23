@@ -76,13 +76,14 @@ RUN set -eux; \
 	chown redmine:redmine "$HOME"; \
 	chmod 1777 "$HOME"
 
-ENV REDMINE_VERSION 4.0.1
-ENV REDMINE_DOWNLOAD_MD5 a1dc18d981901e32bbeabca67984ca9b
+ENV REDMINE_VERSION 1
+ENV REDMINE_DOWNLOAD_MD5 b31b566c05748a54341e622feae0deb3
 
-RUN wget -O redmine.tar.gz "https://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz" \
-	&& echo "$REDMINE_DOWNLOAD_MD5 redmine.tar.gz" | md5sum -c - \
-	&& tar -xvf redmine.tar.gz --strip-components=1 \
-	&& rm redmine.tar.gz files/delete.me log/delete.me \
+#RUN wget -O redmine.tar.gz "https://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz" \
+RUN wget -O master.tar.gz "https://github.com/ChallengeSoft/redmine-${REDMINE_VERSION}/archive/master.tar.gz" \
+	&& echo "$REDMINE_DOWNLOAD_MD5 master.tar.gz" | md5sum -c - \
+	&& tar -xvf master.tar.gz --strip-components=1 \
+	&& rm master.tar.gz files/delete.me log/delete.me \
 	&& mkdir -p log public/plugin_assets sqlite tmp/pdf tmp/pids \
 	&& chown -R redmine:redmine ./ \
 # log to STDOUT (https://github.com/docker-library/redmine/issues/108)
